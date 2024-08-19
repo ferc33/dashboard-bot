@@ -108,7 +108,7 @@ Este proyecto está bajo la licencia [MIT](https://opensource.org/licenses/MIT).
 ---
 
 <p align="center">
-  <b>Desarrollado con 💻 y ☕ por [tu_nombre]</b>
+  <b>Desarrollado con 💻 y ☕ por Fer y Lucy</b>
 </p>
 
 <p align="center">
