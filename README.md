@@ -1,3 +1,4 @@
+
 # 🚀 Gestión de Consultas Bot
 
 ![Python](https://img.shields.io/badge/Python-3.12-blue.svg?logo=python&logoColor=white)
@@ -30,4 +31,87 @@ Sigue estos pasos para configurar el proyecto localmente:
 1. **Clona el Repositorio:**
 
    ```bash
-   git clone https://github.com/tu-usuario/gestion-bot.git
+   git clone https://github.com/ferc33/gestion-bot.git
+   ```
+
+2. **Navega al Directorio del Proyecto:**
+
+   ```bash
+   cd gestion-bot
+   ```
+
+3. **Crea y Activa un Entorno Virtual:**
+
+   ```bash
+   python -m venv venv
+   source venv/bin/activate  # En Windows usa `venv\Scripts\activate`
+   ```
+
+4. **Instala las Dependencias:**
+
+   ```bash
+   pip install -r requirements.txt
+   ```
+
+5. **Configura las Variables de Entorno:**
+
+   Crea un archivo `.env` en la raíz del proyecto con las siguientes variables:
+
+   ```bash
+   AIRTABLE_API_KEY="tu_api_key"
+   AIRTABLE_BASE_ID="tu_base_id"
+   ```
+
+6. **Aplica las Migraciones de la Base de Datos:**
+
+   ```bash
+   python manage.py makemigrations
+   python manage.py migrate
+   ```
+
+7. **Inicia el Servidor de Desarrollo:**
+
+   ```bash
+   python manage.py runserver
+   ```
+
+8. **Accede al Sistema:**
+
+   Abre tu navegador y dirígete a [http://127.0.0.1:8000/](http://127.0.0.1:8000/) para ver el sistema en acción.
+
+## 🤖 Integración con Voiceflow
+
+El bot de Voiceflow integrado permite una interacción fluida con los clientes mediante comandos de voz o texto. Los usuarios pueden registrar solicitudes de servicio, hacer consultas y recibir actualizaciones automáticas sobre el estado de sus pedidos.
+
+<p align="center">
+  <img src="https://your-image-url.com/voiceflow-demo.png" alt="Voiceflow Integration" width="600"/>
+</p>
+
+## 🔧 Automatización con Make
+
+**Make** se encarga de la automatización de tareas backend cruciales, como la actualización de estados de las consultas y el envío de notificaciones automáticas a los clientes, optimizando así el flujo de trabajo sin necesidad de intervención manual.
+
+<p align="center">
+  <img src="https://your-image-url.com/make-automation.png" alt="Make Automation" width="600"/>
+</p>
+
+## 📊 Características Adicionales
+
+- **🔒 Autenticación de Usuarios**: Sistema de autenticación para proteger el acceso a la interfaz de administración.
+- **📈 Reportes Detallados**: Genera reportes de todas las consultas gestionadas en el sistema.
+- **📲 Notificaciones Automatizadas**: Envía notificaciones automáticas a los clientes cuando cambia el estado de su consulta.
+
+## 📜 Licencia
+
+Este proyecto está bajo la licencia [MIT](https://opensource.org/licenses/MIT). 
+
+---
+
+<p align="center">
+  <b>Desarrollado con 💻 y ☕ por [tu_nombre]</b>
+</p>
+
+<p align="center">
+  <a href="https://github.com/tu-usuario/gestion-bot/issues">Reportar un problema</a> |
+  <a href="https://github.com/tu-usuario/gestion-bot/pulls">Enviar una mejora</a>
+</p>
