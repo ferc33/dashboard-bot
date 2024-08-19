@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>Consultas Pendientes</h1>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <!-- <th>id</th> -->
+            <th>Cliente</th>
+            <th>Telefono</th>
+            <th>Tipo Consulta</th>
+            <th>Descripcion del problema</th>
+            <th>Estado</th>
+          
+        </tr>
+    </thead>
+    <tbody>
+        {% for consulta in consultas %}
+        <tr>
+            <!-- <td>{{ consulta.fields.id }}</td> -->
+            <td>{{ consulta.fields.Cliente }}</td>
+            <td>{{ consulta.fields.Telefono }}</td>
+            <td>{{ consulta.fields.TipoConsulta }}</td>
+            <td>{{ consulta.fields.DescripcionConsulta }}</td>
+            <td>{{ consulta.fields.Estado }}</td>
+            <td>
+                <a href="{% url 'actualizar_estado' consulta.id %}" class="btn btn-primary">Actualizar Estado</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}
