@@ -31,6 +31,7 @@ def actualizar_en_airtable(consulta):
             "Estado": consulta.Estado,
             "DescripcionConsulta": consulta.DescripcionConsulta,
             "Direccion": consulta.Direccion,
+            "external_id": consulta.external_id,
         }
     }
 

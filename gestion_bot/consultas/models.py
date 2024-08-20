@@ -10,6 +10,8 @@ class Consulta(models.Model):
     DescripcionConsulta = models.TextField()
     Direccion = models.CharField(max_length=255)
     Fecha = models.DateTimeField(auto_now_add=True)
+    airtable_id = models.CharField(max_length=255, unique=True, null=True, blank=True)
+
 
     def __str__(self):
         return f"{self.Cliente} - {self.TipoConsulta}"

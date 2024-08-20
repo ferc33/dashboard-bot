@@ -1,49 +1,77 @@
 {% extends 'base.html' %}
-
+{% load static %}
 {% block content %}
-<h1 class="text-center my-4">Consultas Pendientes</h1>
-<div class="table-responsive">
-    <table class="table table-hover table-bordered align-middle">
-        <thead class="bg-primary text-white">
-            <tr>
-                <th>Nombre Cliente</th>
-                <th>Teléfono</th>
-                <th>Tipo de Consulta</th>
-                <th>Problema del cliente</th>
-                <th>Estado</th>
-                <th>Acciones</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for consulta in consultas %}
-            <tr>
-                <td class="text-center">{{ consulta.fields.Cliente }}</td>
-                <td class="text-center">{{ consulta.fields.Telefono }}</td>
-                <td class="text-center">
-                    <span class="badge 
-                                 {% if consulta.fields.TipoConsulta == 'Service' %}bg-warning text-dark{% elif consulta.fields.TipoConsulta == 'Presupuesto' %}bg-primary{% elif consulta.fields.TipoConsulta == 'Urgencia' %}bg-danger{% endif %}">
-                        {{ consulta.fields.TipoConsulta }}
-                    </span>
-                </td>
-                <td class="text-center">{{ consulta.fields.DescripcionConsulta }}</td>
-                <td>
-                    <form method="post" action="{% url 'actualizar_estado' consulta.id %}">
-                        {% csrf_token %}
-                        <select name="estado" class="form-select form-select-sm">
-                            <option value="Pendiente" {% if consulta.fields.Estado == "Pendiente" %}selected{% endif %}>Pendiente</option>
-                            <option value="En proceso" {% if consulta.fields.Estado == "En proceso" %}selected{% endif %}>En proceso</option>
-                            <option value="Finalizado" {% if consulta.fields.Estado == "Finalizado" %}selected{% endif %}>Finalizado</option>
-                        </select>
-                </td>
-                <td class="text-center">
-                    <button type="submit" class="btn btn-success btn-sm">
-                        <i class="fas fa-sync-alt"></i> Actualizar
-                    </button>
-                </form>
-                </td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
-</div>
+    <div class="container my-5">
+        <h1 class="text-center text-black mb-4">Consultas Diarias</h1>
+        
+        <div class="table-responsive shadow-sm p-3 mb-5 bg-body rounded">
+            <table id="consultas-table" class="table table-hover table-bordered table-striped align-middle">
+                <thead class="table-primary text-center">
+                    <tr>
+                        <th>Nombre Cliente</th>
+                        <th>Teléfono</th>
+                        <th>Tipo de Consulta</th>
+                        <th>Problema del Cliente</th>
+                        <th>Estado</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for consulta in consultas %}
+                        <tr id="consulta-{{ consulta.id }}">
+                            <td class="text-center">{{ consulta.fields.Cliente }}</td>
+                            <td class="text-center">{{ consulta.fields.Telefono }}</td>
+                            <td class="text-center">
+                                <span class="badge {% if consulta.fields.TipoConsulta == 'Urgencia' %}bg-danger{% elif consulta.fields.TipoConsulta == 'Presupuesto' %}bg-primary{% else %}bg-warning text-dark{% endif %}">
+                                    {{ consulta.fields.TipoConsulta }}
+                                </span>
+                            </td>
+                            <td>{{ consulta.fields.DescripcionConsulta }}</td>
+                            <td class="text-center">
+                                <!-- Formulario para borrar la consulta -->
+                                <form class="delete-form" data-id="{{ consulta.id }}">
+                                    {% csrf_token %}
+                                    <button type="submit" class="btn btn-danger btn-sm mx-1" title="Eliminar Consulta">
+                                        <i class="fas fa-times"></i> <!-- Icono de eliminación -->
+                                    </button>
+                                </form>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function(){
+            $('.delete-form').on('submit', function(event){
+                event.preventDefault();  // Evita el envío del formulario de manera predeterminada
+
+                var form = $(this);
+                var consultaId = form.data('id');
+                var url = "{% url 'borrar_consulta' 'consulta_id_placeholder' %}".replace('consulta_id_placeholder', consultaId);
+                var csrfToken = form.find('input[name="csrfmiddlewaretoken"]').val();
+
+                if(confirm("¿Estás seguro de que deseas eliminar esta consulta?")) {
+                    $.ajax({
+                        url: url,
+                        type: 'DELETE',
+                        headers: {
+                            'X-CSRFToken': csrfToken  // Asegura que se envíe el CSRF token
+                        },
+                        success: function(response) {
+                            // Eliminar la fila de la tabla correspondiente a la consulta
+                            $('#consulta-' + consultaId).remove();
+                            alert('Consulta eliminada correctamente.');
+                        },
+                        error: function(xhr, status, error) {
+                            alert('Hubo un error al intentar eliminar la consulta.');
+                        }
+                    });
+                }
+            });
+        });
+    </script>
 {% endblock %}
