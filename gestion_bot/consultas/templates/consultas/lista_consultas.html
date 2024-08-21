@@ -18,7 +18,7 @@
                 </thead>
                 <tbody>
                     {% for consulta in consultas %}
-                        <tr id="consulta-{{ consulta.id }}">
+                        <tr id="consulta-{{ consulta.airtable_id }}">
                             <td class="text-center">{{ consulta.fields.Cliente }}</td>
                             <td class="text-center">{{ consulta.fields.Telefono }}</td>
                             <td class="text-center">
@@ -28,12 +28,28 @@
                             </td>
                             <td>{{ consulta.fields.DescripcionConsulta }}</td>
                             <td class="text-center">
-                                <!-- Formulario para borrar la consulta -->
-                                <form class="delete-form" data-id="{{ consulta.id }}">
+                                <!-- Select para cambiar el estado -->
+                                <form 
+                                     hx-trigger="change" hx-target="closest tr" hx-swap="outerHTML">
                                     {% csrf_token %}
-                                    <button type="submit" class="btn btn-danger btn-sm mx-1" title="Eliminar Consulta">
-                                        <i class="fas fa-times"></i> <!-- Icono de eliminación -->
+                                    <select name="Estado" class="form-select estado-select">
+                                        <option value="Pendiente" {% if consulta.fields.Estado == "Pendiente" %}selected{% endif %}>Pendiente</option>
+                                        <option value="En proceso" {% if consulta.fields.Estado == "En proceso" %}selected{% endif %}>En proceso</option>
+                                        <option value="Finalizado" {% if consulta.fields.Estado == "Finalizado" %}selected{% endif %}>Finalizado</option>
+                                    </select>
+                                </form>
+                            </td>
+                            <td class="text-center">
+                                <!-- Botón para eliminar la consulta -->
+                                <form class="delete-form"  hx-confirm="¿Estás seguro de que deseas eliminar esta consulta?" hx-target="closest tr" hx-swap="outerHTML">
+                                    {% csrf_token %}
+                                    <button type="submit" class="btn btn-info btn-md mx-1" title="Editar campo">
+                                        <i class="fa-solid fa-rotate"></i> <!-- Icono de eliminación -->
                                     </button>
+                                    <button type="submit" class="btn btn-danger btn-md mx-1" title="Eliminar Consulta">
+                                        <i class="fa-solid fa-circle-minus"></i> <!-- Icono de eliminación -->
+                                    </button>
+                                    
                                 </form>
                             </td>
                         </tr>
@@ -42,36 +58,4 @@
             </table>
         </div>
     </div>
-
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script>
-        $(document).ready(function(){
-            $('.delete-form').on('submit', function(event){
-                event.preventDefault();  // Evita el envío del formulario de manera predeterminada
-
-                var form = $(this);
-                var consultaId = form.data('id');
-                var url = "{% url 'borrar_consulta' 'consulta_id_placeholder' %}".replace('consulta_id_placeholder', consultaId);
-                var csrfToken = form.find('input[name="csrfmiddlewaretoken"]').val();
-
-                if(confirm("¿Estás seguro de que deseas eliminar esta consulta?")) {
-                    $.ajax({
-                        url: url,
-                        type: 'DELETE',
-                        headers: {
-                            'X-CSRFToken': csrfToken  // Asegura que se envíe el CSRF token
-                        },
-                        success: function(response) {
-                            // Eliminar la fila de la tabla correspondiente a la consulta
-                            $('#consulta-' + consultaId).remove();
-                            alert('Consulta eliminada correctamente.');
-                        },
-                        error: function(xhr, status, error) {
-                            alert('Hubo un error al intentar eliminar la consulta.');
-                        }
-                    });
-                }
-            });
-        });
-    </script>
 {% endblock %}
