@@ -1,77 +1,70 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block content %}
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-12">
-                <div class="card">
-                    <div class="card-header">
-                        <h3 class="card-title">Tabla de consultas</h3>
-                    </div>
-                    <!-- /.card-header -->
-                    <div class="card-body">
-                        <table id="consultas-table" class="table table-bordered table-hover">
-                            <thead class="table-primary text-center">
-                                <tr>
-                                    <th>Nombre Cliente</th>
-                                    <th>Teléfono</th>
-                                    <th>Tipo de Consulta</th>
-                                    <th>Problema del Cliente</th>
-                                    <th>Estado</th>
-                                    <th>Acciones</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {% for consulta in consultas %}
-                                    <tr id="consulta-{{ consulta.airtable_id }}">
-                                        <td class="text-center">{{ consulta.fields.Cliente }}</td>
-                                        <td class="text-center">{{ consulta.fields.Telefono }}</td>
-                                        <td class="text-center">
-                                            <span class="badge {% if consulta.fields.TipoConsulta == 'Urgencia' %}bg-danger{% elif consulta.fields.TipoConsulta == 'Presupuesto' %}bg-primary{% else %}bg-warning text-dark{% endif %}">
-                                                {{ consulta.fields.TipoConsulta }}
-                                            </span>
-                                        </td>
-                                        <td>{{ consulta.fields.DescripcionConsulta }}</td>
-                                        <td
-                                            class="text-center">
-                                            <!-- Select para cambiar el estado -->
-                                            <form hx-trigger="change" hx-target="closest tr" hx-swap="outerHTML">
-                                                {% csrf_token %}
-                                                <div class="estado-container d-flex align-items-center">
-                                                    <select name="Estado" class="form-select estado-select">
-                                                        <option value="Pendiente" {% if consulta.fields.Estado == "Pendiente" %} selected {% endif %}>Pendiente</option>
-                                                        <option value="En proceso" {% if consulta.fields.Estado == "En proceso" %} selected {% endif %}>En proceso</option>
-                                                        <option value="Finalizado" {% if consulta.fields.Estado == "Finalizado" %} selected {% endif %}>Finalizado</option>
-                                                    </select>
-                                                    <span class="estado-badge badge ms-2"></span>
-                                                </div>
-                                            </form>
-                                        </td>
-                                        <td
-                                            class="text-center">
-                                            <!-- Botón para eliminar la consulta -->
-                                            <form
-                                                class="delete-form" hx-confirm="¿Estás seguro de que deseas eliminar esta consulta?" hx-target="closest tr" hx-swap="outerHTML">
-                                                <!-- {% csrf_token %} -->
-                                                <button type="submit" class="btn btn-warning btn-sm mx-1" title="Editar campo">
-                                                    <i class="fa-solid fa-rotate"></i>
-                                                    <!-- Icono de eliminación -->
-                                                </button>
-                                                <button type="submit" class="btn btn-danger btn-sm mx-1" title="Eliminar Consulta">
-                                                    <i class="bi bi-trash3-fill"></i>
-                                                    <!-- Icono de eliminación -->
-                                                </button>
-
-                                            </form>
-                                        </td>
-                                    </tr>
-                                {% endfor %}
-                            </tbody>
-
-                        </table>
-                    </div>
-                    <!-- /.card-body -->
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">Tabla de consultas</h3>
                 </div>
-                <!-- /.card -->
-
-            {% endblock %}
+                <!-- /.card-header -->
+                <div class="card-body">
+                    <table id="consultas-table" class="table table-bordered table-hover">
+                        <thead class="table-primary text-center">
+                            <tr>
+                                <th>Nombre Cliente</th>
+                                <th>Teléfono</th>
+                                <th>Tipo de Consulta</th>
+                                <th>Problema del Cliente</th>
+                                <th>Estado</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for consulta in consultas %}
+                            <tr id="consulta-{{ consulta.airtable_id }}">
+                                <td class="text-center">{{ consulta.fields.Cliente }}</td>
+                                <td class="text-center">{{ consulta.fields.Telefono }}</td>
+                                <td class="text-center">
+                                    <span
+                                        class="badge {% if consulta.fields.TipoConsulta == 'Urgencia' %}bg-danger{% elif consulta.fields.TipoConsulta == 'Presupuesto' %}bg-primary{% else %}bg-warning text-dark{% endif %}">
+                                        {{ consulta.fields.TipoConsulta }}
+                                    </span>
+                                </td>
+                                <td>{{ consulta.fields.DescripcionConsulta }}</td>
+                                <td class="text-center">
+                                    <!-- Select para cambiar el estado -->
+                                    <form hx-put="{% url 'actualizar_estado' consulta.id %}" hx-target="closest tr"
+                                        hx-swap="outerHTML">
+                                        <select name="Estado" class="form-select estado-select" style="width: 100%;">
+                                            <option value="Pendiente" {% if consulta.fields.Estado == "Pendiente" %}selected{% endif %}>Pendiente</option>
+                                            <option value="En proceso" {% if consulta.fields.Estado == "En proceso" %}selected{% endif %}>En proceso</option>
+                                            <option value="Finalizado" {% if consulta.fields.Estado == "Finalizado" %}selected{% endif %}>Finalizado</option>
+                                        </select>
+                                    </form>
+                                </td>
+                                <td class="text-center">
+                                    <!-- Botón para eliminar la consulta -->
+                                    <form hx-delete="{% url 'borrar_consulta' consulta.id %}"
+                                        hx-confirm="¿Estás seguro de que deseas eliminar esta consulta?"
+                                        hx-target="closest tr" hx-swap="outerHTML">
+                                        <button type="submit" class="btn btn-danger btn-sm mx-1"
+                                            title="Eliminar Consulta">
+                                            <i class="bi bi-trash3-fill"></i>
+                                        </button>
+                                    </form>
+                                </td>
+                                
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                <!-- /.card-body -->
+            </div>
+            <!-- /.card -->
+        </div>
+    </div>
+</div>
+{% endblock %}

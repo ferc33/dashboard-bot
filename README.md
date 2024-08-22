@@ -81,10 +81,10 @@ Sigue estos pasos para configurar el proyecto localmente:
 
 ## 🤖 Integración con Voiceflow
 
-El bot de Voiceflow integrado permite una interacción fluida con los clientes mediante comandos de voz o texto. Los usuarios pueden registrar solicitudes de servicio, hacer consultas y recibir actualizaciones automáticas sobre el estado de sus pedidos.
+El bot de Voiceflow integrado permite una interacción fluida con los clientes mediante mensajes de texto. Los usuarios pueden registrar solicitudes de servicio, hacer consultas y recibir actualizaciones automáticas sobre el estado de sus pedidos.
 
 <p align="center">
-  <img src="https://your-image-url.com/voiceflow-demo.png" alt="Voiceflow Integration" width="600"/>
+  <img src="" alt="Voiceflow Integration" width="600"/>
 </p>
 
 ## 🔧 Automatización con Make
@@ -92,7 +92,7 @@ El bot de Voiceflow integrado permite una interacción fluida con los clientes m
 **Make** se encarga de la automatización de tareas backend cruciales, como la actualización de estados de las consultas y el envío de notificaciones automáticas a los clientes, optimizando así el flujo de trabajo sin necesidad de intervención manual.
 
 <p align="center">
-  <img src="https://your-image-url.com/make-automation.png" alt="Make Automation" width="600"/>
+  <img src="" alt="Make Automation" width="600"/>
 </p>
 
 ## 📊 Características Adicionales

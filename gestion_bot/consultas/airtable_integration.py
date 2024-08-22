@@ -1,4 +1,3 @@
-
 from pyairtable import Table
 from django.conf import settings
 
@@ -11,33 +10,40 @@ def obtener_consultas():
         print(f"Error: {e}")
         return []
 
+def obtener_consulta(airtable_id):
+    try:
+        return table.get(airtable_id)
+    except Exception as e:
+        print(f"Error: {e}")
+        return None
+
 def actualizar_en_airtable(consulta):
-    api_key = config('AIRTABLE_API_KEY')
-    base_id = config('AIRTABLE_BASE_ID')
-    table_name = "Consultas"
-
-    url = f"https://api.airtable.com/v0/{base_id}/{table_name}/{consulta.id}"
-
-    headers = {
-        "Authorization": f"Bearer {api_key}",
-        "Content-Type": "application/json"
-    }
-
-    data = {
-        "fields": {
+    try:
+        table.update(consulta.airtable_id, {
             "Cliente": consulta.Cliente,
             "Telefono": consulta.Telefono,
             "TipoConsulta": consulta.TipoConsulta,
             "Estado": consulta.Estado,
             "DescripcionConsulta": consulta.DescripcionConsulta,
             "Direccion": consulta.Direccion,
-            "external_id": consulta.external_id,
-        }
-    }
+        })
+        return True
+    except Exception as e:
+        print(f"Error al actualizar en Airtable: {e}")
+        return False
 
-    response = requests.patch(url, json=data, headers=headers)
+def crear_en_airtable(consulta_data):
+    try:
+        new_record = table.create(consulta_data)
+        return new_record
+    except Exception as e:
+        print(f"Error al crear en Airtable: {e}")
+        return None
 
-    if response.status_code == 200:
-        print("Datos actualizados en Airtable con éxito.")
-    else:
-        print(f"Error al actualizar en Airtable: {response.status_code}")
+def eliminar_en_airtable(airtable_id):
+    try:
+        table.delete(airtable_id)
+        return True
+    except Exception as e:
+        print(f"Error al eliminar en Airtable: {e}")
+        return False
