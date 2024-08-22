@@ -5,32 +5,46 @@ table = Table(settings.AIRTABLE_API_KEY, settings.AIRTABLE_BASE_ID, "Consultas")
 
 def obtener_consultas():
     try:
-        return table.all()
+        records = table.all()
+        for record in records:
+            # Asegúrate de que el record_id se agrega correctamente
+            record['record_id'] = record['id']
+        return records
     except Exception as e:
-        print(f"Error: {e}")
+        print(f"Error al obtener consultas: {e}")
         return []
 
-def obtener_consulta(airtable_id):
+
+def obtener_consulta(record_id):
     try:
-        return table.get(airtable_id)
+        return table.get(record_id)
     except Exception as e:
         print(f"Error: {e}")
         return None
 
 def actualizar_en_airtable(consulta):
     try:
-        table.update(consulta.airtable_id, {
-            "Cliente": consulta.Cliente,
-            "Telefono": consulta.Telefono,
-            "TipoConsulta": consulta.TipoConsulta,
-            "Estado": consulta.Estado,
-            "DescripcionConsulta": consulta.DescripcionConsulta,
-            "Direccion": consulta.Direccion,
-        })
-        return True
+        record_id = consulta['id']  # Obtener el ID del registro
+        fields = {
+            "Cliente": consulta['fields'].get('Cliente', ''),
+            "Telefono": consulta['fields'].get('Telefono', ''),
+            "TipoConsulta": consulta['fields'].get('TipoConsulta', ''),
+            "Estado": consulta['fields'].get('Estado', ''),
+            "DescripcionConsulta": consulta['fields'].get('DescripcionConsulta', ''),
+            "Direccion": consulta['fields'].get('Direccion', '')
+        }
+        
+        # Realiza la actualización en Airtable usando el ID del registro
+        response = table.update(record_id, fields)
+        
+        # Imprime la respuesta para verificar si la actualización fue exitosa
+        print(f"Respuesta de Airtable: {response}")
+        
+        return True if response else False
     except Exception as e:
         print(f"Error al actualizar en Airtable: {e}")
         return False
+
 
 def crear_en_airtable(consulta_data):
     try:
@@ -40,9 +54,9 @@ def crear_en_airtable(consulta_data):
         print(f"Error al crear en Airtable: {e}")
         return None
 
-def eliminar_en_airtable(airtable_id):
+def eliminar_en_airtable(record_id):
     try:
-        table.delete(airtable_id)
+        table.delete(record_id)
         return True
     except Exception as e:
         print(f"Error al eliminar en Airtable: {e}")

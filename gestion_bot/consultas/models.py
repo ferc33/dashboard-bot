@@ -3,6 +3,7 @@ from django.db import models
 
 
 class Consulta(models.Model):
+     # AutoField is the default for a primary key
     Cliente = models.CharField(max_length=255)
     Telefono = models.CharField(max_length=20)
     TipoConsulta = models.CharField(max_length=50)
@@ -10,7 +11,7 @@ class Consulta(models.Model):
     DescripcionConsulta = models.TextField()
     Direccion = models.CharField(max_length=255)
     Fecha = models.DateTimeField(auto_now_add=True)
-    airtable_id = models.CharField(max_length=255, unique=True, null=True, blank=True)
+    
 
 
     def __str__(self):

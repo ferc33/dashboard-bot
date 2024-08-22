@@ -4,7 +4,6 @@ $(document).ready(function() {
                 "lengthMenu": "Mostrar _MENU_ registros",
                 "zeroRecords": "No se encontraron resultados",
                 "info": "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
-                "infoEmpty": "",
                 "infoFiltered": "(filtrado de un total de _MAX_ registros)",
                 "sSearch": "Buscar:",
                 "oPaginate": {

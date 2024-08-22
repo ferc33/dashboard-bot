@@ -1,6 +1,8 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block content %}
+<!-- Bloque de mensajes flash -->
+
 <div class="container-fluid">
     <div class="row">
         <div class="col-12">
@@ -23,39 +25,47 @@
                         </thead>
                         <tbody>
                             {% for consulta in consultas %}
-                            <tr id="consulta-{{ consulta.airtable_id }}">
+                            <tr id="consulta-{{ consulta.id }}">
                                 <td class="text-center">{{ consulta.fields.Cliente }}</td>
                                 <td class="text-center">{{ consulta.fields.Telefono }}</td>
                                 <td class="text-center">
-                                    <span
-                                        class="badge {% if consulta.fields.TipoConsulta == 'Urgencia' %}bg-danger{% elif consulta.fields.TipoConsulta == 'Presupuesto' %}bg-primary{% else %}bg-warning text-dark{% endif %}">
+                                    <span class="badge 
+                                    {% if consulta.fields.TipoConsulta == 'Urgencia' %} bg-danger 
+                                    {% elif consulta.fields.TipoConsulta == 'Presupuesto' %} bg-primary 
+                                    {% else %} bg-warning text-dark {% endif %}">
                                         {{ consulta.fields.TipoConsulta }}
                                     </span>
                                 </td>
                                 <td>{{ consulta.fields.DescripcionConsulta }}</td>
                                 <td class="text-center">
-                                    <!-- Select para cambiar el estado -->
-                                    <form hx-put="{% url 'actualizar_estado' consulta.id %}" hx-target="closest tr"
-                                        hx-swap="outerHTML">
-                                        <select name="Estado" class="form-select estado-select" style="width: 100%;">
-                                            <option value="Pendiente" {% if consulta.fields.Estado == "Pendiente" %}selected{% endif %}>Pendiente</option>
-                                            <option value="En proceso" {% if consulta.fields.Estado == "En proceso" %}selected{% endif %}>En proceso</option>
-                                            <option value="Finalizado" {% if consulta.fields.Estado == "Finalizado" %}selected{% endif %}>Finalizado</option>
-                                        </select>
-                                    </form>
+                                    <!-- Contenedor flex para alinear el select y el botón -->
+                                    <div class="d-flex align-items-center justify-content-between">
+                                        <form hx-put="{% url 'actualizar_estado' consulta.record_id %}" hx-target="closest tr" hx-swap="outerHTML" class="d-flex align-items-center w-100">
+                                            <select name="Estado" class="form-select estado-select me-1" style="flex-grow: 1;">
+                                                <option value="Pendiente" {% if consulta.fields.Estado == "Pendiente" %} selected {% endif %}>Pendiente</option>
+                                                <option value="En proceso" {% if consulta.fields.Estado == "En proceso" %} selected {% endif %}>En proceso</option>
+                                                <option value="Finalizado" {% if consulta.fields.Estado == "Finalizado" %} selected {% endif %}>Finalizado</option>
+                                            </select>
+                                            {% csrf_token %}
+                                            <button type="submit" class="btn btn-warning btn-sm" title="Editar campo" style="white-space: nowrap;">
+                                                <i class="fa-solid fa-rotate"></i>
+                                            </button>
+                                        </form>
+                                    </div>
                                 </td>
                                 <td class="text-center">
-                                    <!-- Botón para eliminar la consulta -->
-                                    <form hx-delete="{% url 'borrar_consulta' consulta.id %}"
+                                    <!-- Formulario para eliminar la consulta -->
+                                    <form hx-delete="{% url 'borrar_consulta' consulta.record_id %}"
                                         hx-confirm="¿Estás seguro de que deseas eliminar esta consulta?"
                                         hx-target="closest tr" hx-swap="outerHTML">
+                                        {% csrf_token %}
                                         <button type="submit" class="btn btn-danger btn-sm mx-1"
                                             title="Eliminar Consulta">
                                             <i class="bi bi-trash3-fill"></i>
                                         </button>
                                     </form>
                                 </td>
-                                
+
                             </tr>
                             {% endfor %}
                         </tbody>
@@ -68,3 +78,5 @@
     </div>
 </div>
 {% endblock %}
+
+  
