@@ -10,8 +10,6 @@ def lista_consultas(request):
     consultas = obtener_consultas()
     return render(request, 'consultas/lista_consultas.html', {'consultas': consultas})
 
-
-
 @csrf_exempt
 @require_http_methods(["GET", "PUT"])
 def actualizar_estado(request, record_id):

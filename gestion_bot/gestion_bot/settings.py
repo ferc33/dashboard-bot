@@ -28,7 +28,8 @@ SECRET_KEY = 'django-insecure-_w1&3rlwhhf6nd+8pt41asw3&#%ety#m%0v@fbc=tpijsq^vnc
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['192.168.1.38', 'localhost', '127.0.0.1']
+
 
 AIRTABLE_API_KEY = config('AIRTABLE_API_KEY')
 AIRTABLE_BASE_ID = config('AIRTABLE_BASE_ID')
