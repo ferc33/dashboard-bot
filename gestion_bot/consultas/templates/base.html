@@ -7,36 +7,35 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>{% block title %}Dashboard{% endblock %} | AdminLTE 3</title>
-
+  
   <!-- Bootstrap 5 -->
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css">
-  <!--Datatablees-->
-  <link rel="stylesheet"
-    href="https://cdnjs.cloudflare.com/ajax/libs/datatables/1.10.21/css/dataTables.bootstrap.min.css"
-    integrity="sha512-BMbq2It2D3J17/C7aRklzOODG1IQ3+MHw3ifzBHMBwGO/0yUqYmsStgBjI0z5EYlaDEFnvYV7gNYdD3vFLRKsA=="
-    crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">  <!-- DataTables CSS -->
+  <link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/dataTables.bootstrap5.min.css">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+
   <!-- Font Awesome Icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
-  <link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css">
-  <link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/dataTables.bootstrap5.min.css">
-
-
   <!-- Theme style -->
   <link rel="stylesheet" href="{% static 'dist/css/adminlte.min.css' %}">
-
+  
 </head>
 
-<body class="hold-transition  sidebar-mini layout-fixed layout-navbar-fixed layout-footer-fixed">
-  <div class="wrapper">
 
+<body class="hold-transition sidebar-mini layout-fixed">
+  <div class="wrapper">
+    <div class=" flex-column justify-content-center align-items-center">
+      <img class="animation__shake" src="{% static 'dist/img/logo.png' %}" alt="AdminLTELogo" height="60" width="60">
+    </div>
     <!-- Navbar -->
     {% include 'partials/navbar.html' %}
+         <!-- Preloader -->
 
     <!-- Main Sidebar Container -->
     {% include 'partials/sidebar.html' %}
 
     <!-- Content Wrapper -->
     <div class="content-wrapper">
+ 
       {% block content_header %}
       <div class="content-header">
         <div class="container-fluid">
@@ -67,30 +66,33 @@
 
   {% block Javascript %}
   <!-- jQuery -->
-  <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4="
-    crossorigin="anonymous"></script>
-  <!-- Bootstrap 5 JS -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/js/bootstrap.min.js"
-    integrity="sha512-ykZ1QQr0Jy/4ZkvKuqWn4iF3lqPZyij9iRv6sGqLRdTPkY69YX6+7wvVGmsdBbiIfN/8OdsI7HABjvEok6ZopQ=="
-    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/js/bootstrap.bundle.min.js"
-    integrity="sha512-7Pi/otdlbbCR+LnW+F7PwFcSDJOuUJB3OxtEHbg4vSMvzvJjde4Po1v4BR9Gdc9aXNUNFVUY+SK51wWT8WF0Gg=="
-    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/js/bootstrap.esm.min.js"
-    integrity="sha512-p6KKvRUjLcXZtvsFd+01s4jcHKu0PNWplQNHeEHmq+27tF5osNRRNkziDu45B5Mo+0+DE/k1qD0ZI29DHEutww=="
-    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-  <!-- DataTables JS -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/datatables/1.10.21/js/jquery.dataTables.min.js"
-    integrity="sha512-BkpSL20WETFylMrcirBahHfSnY++H2O1W+UnEEO4yNIl+jI2+zowyoGJpbtk6bx97fBXf++WJHSSK2MV4ghPcg=="
-    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-  <!-- DataTables JS -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/datatables/1.10.21/js/dataTables.dataTables.min.js"
-    integrity="sha512-fQmyZE5e3plaa6ADOXBM17WshoZzDIvo7sR4GC1VsmSKqm13Ed8cO2kPwFPAOoeF0RcdhuQQlPq46X/HnPmllg=="
-    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-  <script src="{% static 'dist/js/adminlte.js' %}"></script>
-  <!-- Custom JS -->
-  <script src="{% static 'js/custom.js' %}"></script>
+ <!-- jQuery -->
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+<!-- Bootstrap 5 JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-c2l5yDd7Fm/wBz/jU1UelIRYHQonU0LnVj7erCSYlRkaXxyjbXSRQ2JAhSA2Ffrz" crossorigin="anonymous"></script>
+<!-- DataTables JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+<script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.11.5/js/dataTables.bootstrap5.min.js"></script>
+<!-- AdminLTE App -->
+<script src="{% static 'dist/js/adminlte.js' %}"></script>
+<!-- Custom JS -->
+<script src="{% static 'js/custom.js' %}"></script>
+
+<!-- <script src="{% static 'js/select.js' %}"></script> -->
   {% endblock %}
 </body>
 
 </html>
+
+
+<!-- <script>
+  // Esperar a que toda la página haya cargado
+  window.addEventListener('load', function() {
+    // Mantener el preloader visible por 2 segundos
+    setTimeout(function() {
+      document.querySelector('.preloader').style.display = 'none';
+      document.querySelector('.wrapper').style.display = 'block';
+    }, 1000); // 2000 milisegundos = 2 segundos
+  });
+</script> -->
