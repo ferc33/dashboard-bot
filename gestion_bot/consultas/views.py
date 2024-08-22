@@ -1,9 +1,9 @@
 import json
-from .airtable_integration import obtener_consultas, obtener_consulta, actualizar_en_airtable, crear_en_airtable, eliminar_en_airtable
-from django.shortcuts import render, get_object_or_404, redirect
-from django.http import JsonResponse, HttpResponse
+from django.shortcuts import render
+from django.http import JsonResponse
+from django.views.decorators.http import require_http_methods
 from django.views.decorators.csrf import csrf_exempt
-from django.contrib import messages
+from .airtable_integration import obtener_consultas, obtener_consulta, actualizar_en_airtable, crear_en_airtable, eliminar_en_airtable
 
 @csrf_exempt
 def lista_consultas(request):
@@ -11,25 +11,40 @@ def lista_consultas(request):
     return render(request, 'consultas/lista_consultas.html', {'consultas': consultas})
 
 
+
 @csrf_exempt
+@require_http_methods(["GET", "PUT"])
 def actualizar_estado(request, record_id):
     if request.method == "PUT":
-        estado = request.POST.get('Estado')
-        
-        if estado:
+        try:
+            data = json.loads(request.body)
+            estado = data.get('Estado')
+            if not estado:
+                return JsonResponse({'success': False, 'error': 'El estado no fue proporcionado'}, status=400)
+            
             consulta = obtener_consulta(record_id)
-            if consulta:
-                consulta['fields']['Estado'] = estado
-                if actualizar_en_airtable(consulta):
-                    return JsonResponse({'success': True})
-                else:
-                    return JsonResponse({'success': False, 'error': 'Error al actualizar en Airtable'}, status=500)
-            else:
+            if not consulta:
                 return JsonResponse({'success': False, 'error': 'Consulta no encontrada'}, status=404)
-        else:
-            return JsonResponse({'success': False, 'error': 'El estado no fue proporcionado'}, status=400)
+            
+            consulta['fields']['Estado'] = estado
+            if actualizar_en_airtable(consulta):
+                return JsonResponse({'success': True, 'newState': estado})
+            else:
+                return JsonResponse({'success': False, 'error': 'Error al actualizar en Airtable'}, status=500)
+        except json.JSONDecodeError:
+            return JsonResponse({'success': False, 'error': 'Invalid JSON'}, status=400)
+        except Exception as e:
+            return JsonResponse({'success': False, 'error': str(e)}, status=500)
     
-    return JsonResponse({'success': False, 'error': 'Método no permitido'}, status=400)
+    # Si es GET, devolver el estado actual
+    consulta = obtener_consulta(record_id)
+    if consulta:
+        return JsonResponse({'success': True, 'currentState': consulta['fields'].get('Estado', '')})
+    return JsonResponse({'success': False, 'error': 'Consulta no encontrada'}, status=404)
+
+# ... (resto de las vistas)
+
+
 
 @csrf_exempt
 def crear_consulta(request):
@@ -47,9 +62,13 @@ def crear_consulta(request):
             return JsonResponse({'success': True, 'airtable_id': new_record['id']})
     return JsonResponse({'success': False}, status=400)
 
+
+
 @csrf_exempt
 def borrar_consulta(request, record_id):
     if request.method == "DELETE":
         if eliminar_en_airtable(record_id):
-            return JsonResponse({'success': True})
+            # Retorna un HTTP 204 No Content que indica que la operación fue exitosa, 
+            # pero no se envía ningún contenido de vuelta.
+            return JsonResponse({'success': True}, status=204)
     return JsonResponse({'success': False}, status=400)
