@@ -26,10 +26,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-_w1&3rlwhhf6nd+8pt41asw3&#%ety#m%0v@fbc=tpijsq^vnc'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = True  
 
-ALLOWED_HOSTS = ['29c8-201-219-105-29.ngrok-free.app', 'localhost', '127.0.0.1']
-
+ALLOWED_HOSTS = ['5296-201-219-105-29.ngrok-free.app', 'localhost', '127.0.0.1']
+#ALLOWED_HOSTS = []
 
 
 AIRTABLE_API_KEY = config('AIRTABLE_API_KEY')

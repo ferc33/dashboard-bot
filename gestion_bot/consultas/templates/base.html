@@ -21,11 +21,13 @@
 </head>
 
 
-<body class="hold-transition sidebar-mini layout-fixed">
+<body class="sidebar-mini sidebar-closed sidebar-collapse">
   <div class="wrapper">
-    <div class=" flex-column justify-content-center align-items-center">
+    <div class="preloader flex-column justify-content-center align-items-center">
       <img class="animation__shake" src="{% static 'dist/img/logo.png' %}" alt="AdminLTELogo" height="60" width="60">
     </div>
+    
+    
     <!-- Navbar -->
     {% include 'partials/navbar.html' %}
          <!-- Preloader -->
@@ -65,7 +67,7 @@
   </div>
 
   {% block Javascript %}
-  <!-- jQuery -->
+  
  <!-- jQuery -->
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 <!-- Bootstrap 5 JS -->
@@ -86,7 +88,7 @@
 </html>
 
 
-<!-- <script>
+ <script>
   // Esperar a que toda la página haya cargado
   window.addEventListener('load', function() {
     // Mantener el preloader visible por 2 segundos
@@ -95,4 +97,4 @@
       document.querySelector('.wrapper').style.display = 'block';
     }, 1000); // 2000 milisegundos = 2 segundos
   });
-</script> -->
+</script> 
