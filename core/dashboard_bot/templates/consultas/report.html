@@ -1,0 +1,69 @@
+{% extends 'report.html' %}
+{% load static %}
+{% block head_report %}
+<script src="{% static 'js/report.js' %}"></script>
+{% endblock %}
+
+{% block content_report %}
+<!-- <div class="row">
+        <div class="col-lg-4">
+            <div class="form-group">
+                <label>Rango de fechas:</label>
+                {{ form.date_range }}
+            </div>
+        </div>
+    </div> -->
+<hr>
+<table class="table table-bordered" id="data">
+    <thead>
+        <tr>
+            <th scope="col">Cliente</th>
+            <th scope="col">Telefono</th>
+            <th scope="col">Motivo</th>
+            <th scope="col">Problema Cliente</th>
+            <th scope="col">Estado</th>
+            <th scope="col">Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for consulta in consultas %}
+        <tr class="text-center">
+            <td>{{ consulta.fields.Cliente }}</td>
+            <td>{{ consulta.fields.Telefono }}</td>
+            <td>
+                <span
+                    class="badge {% if consulta.fields.TipoConsulta == 'Urgencia' %}bg-danger{% elif consulta.fields.TipoConsulta == 'Presupuesto' %}bg-primary{% else %}bg-warning text-dark{% endif %}">
+                    {{ consulta.fields.TipoConsulta }}
+                </span>
+            </td>
+            <td>{{ consulta.fields.DescripcionConsulta }}</td>
+            <td>
+                <select 
+                class="form-control estado-select" 
+                hx-put="/consultas/actualizar/{{ consulta.id }}/" 
+                hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'
+                hx-trigger="change"
+                hx-target="this"
+                hx-swap="outerHTML">
+                <option value="Pendiente" {% if consulta.fields.Estado == 'Pendiente' %}selected{% endif %}>Pendiente</option>
+                <option value="En proceso" {% if consulta.fields.Estado == 'En proceso' %}selected{% endif %}>En proceso</option>
+                <option value="Finalizado" {% if consulta.fields.Estado == 'Finalizado' %}selected{% endif %}>Finalizado</option>
+            </select>
+            
+            </td>
+            <td>
+                <button class="btn btn-danger btn-sm delete-btn" hx-delete="/consultas/borrar/{{ consulta.id }}/"
+                    hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}' hx-target="closest tr" hx-swap="outerHTML">
+                    <i class="fas fa-trash-alt"></i>
+                </button>
+
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}
+
+
+
+

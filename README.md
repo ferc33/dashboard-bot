@@ -1,117 +1,85 @@
+# Bienvenidos al repositorio oficial de AlgoriSoft
 
-# 🚀 Gestión de Consultas Bot
+Este proyecto inicio desde el año 2019 para los siguientes cursos de mi canal de [Youtube](https://www.youtube.com/c/AlgoriSoft "Youtube"):
 
-![Python](https://img.shields.io/badge/Python-3.12-blue.svg?logo=python&logoColor=white)
-![Django](https://img.shields.io/badge/Django-5.1-green.svg?logo=django&logoColor=white)
-![Airtable](https://img.shields.io/badge/Airtable-API-orange.svg?logo=airtable&logoColor=white)
-![Voiceflow](https://img.shields.io/badge/Voiceflow-Bot-yellow.svg?logo=voiceflow&logoColor=white)
-![Make](https://img.shields.io/badge/Make-Integration-red.svg?logo=make&logoColor=white)
-![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)
+- [Curso de Python con Django de 0 a Máster | Español](https://youtube.com/playlist?list=PLxm9hnvxnn-j5ZDOgQS63UIBxQytPdCG7 "Curso de Python con Django de 0 a Máster | Español")
+- [Curso de Deploy de un Proyecto Django en un VPS Ubuntu | Español](https://youtube.com/playlist?list=PLxm9hnvxnn-hFNSoNrWM0LalFnSv5oMas "Curso de Deploy de un Proyecto Django en un VPS Ubuntu | Español")
+- [Curso de Python con Django Avanzado | Español](https://www.youtube.com/playlist?list=PLxm9hnvxnn-gvB0h0sEWjAf74ge4tkTOO "Curso de Python con Django Avanzado | Español")
 
-<p align="center">
-  <img src="https://your-image-url.com/illustration.png" alt="Gestión de Consultas Bot" width="600"/>
-</p>
+# Instaladores
 
-## 📝 Descripción
+##### 1) Compilador
 
-**Gestión de Consultas Bot** es un sistema integral diseñado para gestionar las consultas de servicios de plomería. Desarrollado con **Django**, este sistema se conecta con **Airtable** para manejar los datos de las consultas, integrando a la vez un bot de **Voiceflow** que automatiza la interacción con los clientes. Además, **Make** se encarga de la automatización de tareas clave, garantizando un flujo de trabajo eficiente y sin complicaciones.
+- [Python3](https://www.python.org/downloads/release/python-396/ "Python3")
 
-## 🔍 Características Principales
+##### 2) IDE
 
-- **📊 Gestión Eficiente de Consultas**: Registra, rastrea y actualiza el estado de todas las consultas recibidas de manera centralizada.
-- **🔗 Integración con Airtable**: Utiliza Airtable como base de datos para almacenar y gestionar la información de las consultas.
-- **🤖 Bot de Voiceflow**: Automatiza la interacción con los clientes a través de comandos de voz o texto, permitiendo registrar nuevas solicitudes de servicio.
-- **🔄 Automatización con Make**: Automatiza flujos de trabajo como la actualización del estado de las consultas y las notificaciones a los clientes.
-- **🌐 Interfaz Web Moderna**: Una interfaz limpia y accesible donde los administradores pueden ver y actualizar las consultas fácilmente.
+- [Visual Studio Code](https://code.visualstudio.com/ "Visual Studio Code")
+- [Sublime Text](https://www.sublimetext.com/ "Sublime Text")
+- [Pycharm](https://www.jetbrains.com/es-es/pycharm/download/#section=windows "Pycharm")
 
-## 🛠️ Instalación y Configuración
+##### 3) Motor de base de datos
 
-Sigue estos pasos para configurar el proyecto localmente:
+- [Sqlite Studio](https://github.com/pawelsalawa/sqlitestudio/releases "Sqlite Studio")
+- [PostgreSQL](https://www.enterprisedb.com/downloads/postgres-postgresql-downloads "PostgreSQL")
+- [MySQL](https://www.apachefriends.org/es/index.html "MySQL")
 
-1. **Clona el Repositorio:**
+##### 4) Repositorios
 
-   ```bash
-   git clone https://github.com/ferc33/gestion-bot.git
-   ```
+- [Git](https://git-scm.com/downloads "Git")
 
-2. **Navega al Directorio del Proyecto:**
+# Instalación
 
-   ```bash
-   cd gestion-bot
-   ```
+##### 1) Clonar o descargar el proyecto del repositorio
 
-3. **Crea y Activa un Entorno Virtual:**
+`git clone https://gitlab.com/wdavilav/apolo.git`
 
-   ```bash
-   python -m venv venv
-   source venv/bin/activate  # En Windows usa `venv\Scripts\activate`
-   ```
+##### 2) Crear un entorno virtual para posteriormente instalar las librerias del proyecto
 
-4. **Instala las Dependencias:**
+- `python3 -m venv venv` (Windows)
+-  `virtualenv venv -ppython3` (Linux)
 
-   ```bash
-   pip install -r requirements.txt
-   ```
+##### 3) Instalar el complemento de [weasyprint](https://weasyprint.org/ "weasyprint")
 
-5. **Configura las Variables de Entorno:**
+- Si estas usando Windows debe descargar el complemento de [GTK3 installer](https://github.com/tschoonj/GTK-for-Windows-Runtime-Environment-Installer/releases "GTK3 installer"). En algunas ocaciones se debe colocar en las variables de entorno como primera para que funcione y se debe reiniciar el computador.
+- Si estas usando Linux debes instalar las [librerias](https://doc.courtbouillon.org/weasyprint/stable/first_steps.html#linux "librerias") correspondientes a la distribución que tenga instalado en su computador.
 
-   Crea un archivo `.env` en la raíz del proyecto con las siguientes variables:
+##### 4) Activar el entorno virtual de nuestro proyecto
 
-   ```bash
-   AIRTABLE_API_KEY="tu_api_key"
-   AIRTABLE_BASE_ID="tu_base_id"
-   ```
+- `cd venv\Scripts\activate.bat` (Windows)
+- `source venv/bin/active` (Linux)
 
-6. **Aplica las Migraciones de la Base de Datos:**
+##### 5) Instalar todas las librerias del proyecto que se encuentran en la carpeta deploy
 
-   ```bash
-   python manage.py makemigrations
-   python manage.py migrate
-   ```
+- `pip install -r deploy/requirements.txt`
 
-7. **Inicia el Servidor de Desarrollo:**
+##### 6) Crear la base de datos con las migraciones y el superuser para iniciar sesión
 
-   ```bash
-   python manage.py runserver
-   ```
+- `python manage.py makemigrations`
+- `python manage.py migrate`
 
-8. **Accede al Sistema:**
+##### 7) Insertar información inicial en la base de datos
 
-   Abre tu navegador y dirígete a [http://127.0.0.1:8000/](http://127.0.0.1:8000/) para ver el sistema en acción.
+- `python manage.py shell --command='from core.utilities import *'`
+------------
 
-## 🤖 Integración con Voiceflow
+#  Si te gusta y te sirve mi contenido ✅🙏
+### ¡Apóyame! para seguir haciéndolo siempre 😊👏
+Paso la mayor parte de mi tiempo creando contenido y ayudando a futuros programadores sobre el desarrollo web con tecnología open source.
 
-El bot de Voiceflow integrado permite una interacción fluida con los clientes mediante mensajes de texto. Los usuarios pueden registrar solicitudes de servicio, hacer consultas y recibir actualizaciones automáticas sobre el estado de sus pedidos.
+🤗💪¡Muchas Gracias!💪🤗
 
-<p align="center">
-  <img src="" alt="Voiceflow Integration" width="600"/>
-</p>
+**Puedes apoyarme de la siguiente manera.**
 
-## 🔧 Automatización con Make
+**Suscribiéndote**
+https://www.youtube.com/c/AlgoriSoft?sub_confirmation=1
 
-**Make** se encarga de la automatización de tareas backend cruciales, como la actualización de estados de las consultas y el envío de notificaciones automáticas a los clientes, optimizando así el flujo de trabajo sin necesidad de intervención manual.
+**Siguiendo**
+https://www.facebook.com/algorisoft
 
-<p align="center">
-  <img src="" alt="Make Automation" width="600"/>
-</p>
+**Donando por PayPal**
+williamjair94@hotmail.com
 
-## 📊 Características Adicionales
+***AlgoriSoft te desea lo mejor en tu aprendizaje y crecimiento profesional como programador 🤓.***
 
-- **🔒 Autenticación de Usuarios**: Sistema de autenticación para proteger el acceso a la interfaz de administración.
-- **📈 Reportes Detallados**: Genera reportes de todas las consultas gestionadas en el sistema.
-- **📲 Notificaciones Automatizadas**: Envía notificaciones automáticas a los clientes cuando cambia el estado de su consulta.
 
-## 📜 Licencia
-
-Este proyecto está bajo la licencia [MIT](https://opensource.org/licenses/MIT). 
-
----
-
-<p align="center">
-  <b>Desarrollado con 💻 y ☕ por Fer y Lucy</b>
-</p>
-
-<p align="center">
-  <a href="https://github.com/tu-usuario/gestion-bot/issues">Reportar un problema</a> |
-  <a href="https://github.com/tu-usuario/gestion-bot/pulls">Enviar una mejora</a>
-</p>
